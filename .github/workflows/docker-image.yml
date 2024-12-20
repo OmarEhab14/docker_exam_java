@@ -17,4 +17,4 @@ jobs:
       run: ls
     - uses: actions/checkout@v4
     - name: "after printing the folder contents"
-      run: ls
+      run: ls -a
