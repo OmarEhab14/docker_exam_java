@@ -1,20 +1,19 @@
 name: Docker Image CI
-
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
+    branches:
+      - main
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - name: "before printing the folder contents"
-      run: ls
-    - uses: actions/checkout@v4
-    - name: "after printing the folder contents"
-      run: ls -a
+      - uses: actions/checkout@v4
+      - name: "Login to dockerhub"
+        run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOCKEN }}
+      - name: "Building docker image"
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/java_exam_image .
+      - name: "Pushing docker image on docker hub"
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/java_exam_image
